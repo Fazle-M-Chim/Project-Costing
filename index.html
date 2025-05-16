@@ -109,38 +109,47 @@
 
             // Check if inputs are valid numbers
             if (!isNaN(length) && !isNaN(height) && !isNaN(width)) {
-                // --- Cost Calculation Logic based on provided formulas ---
+                // --- Cost Calculation Logic based on provided formulas (without intermediate rounding) ---
 
                 // 1. Calculate Total Length
                 const totalLength = (length + width + 40) / 10;
+                console.log('Step 1: Total Length =', totalLength);
 
                 // 2. Calculate Breadth
                 const breadth = (width + height + 30) / 10;
+                console.log('Step 2: Breadth =', breadth);
 
                 // 3. Calculate Area
                 const area = (totalLength * breadth) / 5000;
+                console.log('Step 3: Area =', area);
 
                 // 4. Calculate Weight of Top
                 const weightTop = area * 0.15;
+                console.log('Step 4: Weight of Top =', weightTop);
 
                 // 5. Calculate Weight of Rest
                 const weightRest = area * 0.75;
+                console.log('Step 5: Weight of Rest =', weightRest);
 
-                // 6. Calculate Total Weight
-                // Interpreting "adding the weight of top and rest and adding the sum and multiplying that by 0.03" as (weightTop + weightRest) * 1.03
-                const totalWeight = (weightTop + weightRest) * 1.03;
+                // 6. Calculate Total Weight (Using the formula you specified)
+                const totalWeight = (weightTop + weightRest) + ((weightTop + weightRest) * 0.03);
+                console.log('Step 6: Total Weight =', totalWeight);
 
                 // 7. Calculate Cost of Top
                 const costTop = weightTop * 36;
+                console.log('Step 7: Cost of Top =', costTop);
 
                 // 8. Calculate Cost of Bottom (assuming "weight of the bottom" refers to weightRest)
                 const costBottom = weightRest * 34;
+                console.log('Step 8: Cost of Bottom =', costBottom);
 
                 // 9. Calculate Price of Convo
                 const priceConvo = totalWeight * 8;
+                console.log('Step 9: Price of Convo =', priceConvo);
 
                 // 10. Calculate Total Cost
                 calculatedCost = costTop + costBottom + priceConvo + 8;
+                console.log('Step 10: Calculated Cost (before final rounding) =', calculatedCost);
 
                 // --- End Cost Calculation Logic ---
             } else {
@@ -153,7 +162,8 @@
             const quotedCostParagraph = document.getElementById('quotedCost');
 
             if (calculatedCost > 0) {
-                quotedCostParagraph.textContent = `The estimated cost for "${productName}" is: $${calculatedCost.toFixed(2)}`;
+                // Use the Rupee symbol and round the final value to two decimals
+                quotedCostParagraph.textContent = `The estimated cost for "${productName}" is: ₹${calculatedCost.toFixed(2)}`;
                 resultDiv.style.display = 'block'; // Show the result div
             } else {
                  quotedCostParagraph.textContent = `Could not calculate cost. Please check inputs and formulas.`;
